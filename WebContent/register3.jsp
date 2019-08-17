@@ -57,9 +57,12 @@
 	<![endif]-->
 	
 	<script type="text/javascript">
-	
+		var randomNum;
 		var checkId = 0;
 		var idOK;
+		var numCheck = 0;
+		var emailOK;
+		var numOK;
 		
 		function nameCheck() {
 			var name = $( '#name' ).val();
@@ -87,19 +90,54 @@
 				data: {id : id},
 				success: function(result) {
 					if(result == 1 && id != "") {
-						$('#idCheckMessage').html('사용가능한 아이디입니다.').css("color", "green");
+						$('#idCheckMessage').html('?�용가?�한 ?�이?�입?�다.').css("color", "green");
 						$("#id").css("background-color", "#B0F6AC");
 						idOK = id;
 						/* document.getElementById('id').readOnly = true; */
 						checkId = 1;
 					} else {
-						$('#idCheckMessage').html('이미 있는 아이디입니다.').css("color", "red");
+						$('#idCheckMessage').html('?��? ?�는 ?�이?�입?�다.').css("color", "red");
 						$("#id").css("background-color", "#FFCECE");
 						checkId = 0;
 					}
 				}
 			})
 		}
+		
+		function emailOK() {
+			randomNum = Math.floor(Math.random() * 100000001) + 1000000;;
+			var email = $('#email').val();
+			$.ajax({
+				type: 'post',
+				url: 'EmailAction.to',
+				data: {"email" : email, "randomNum" : randomNum},
+				success: function(result) {
+					if(result == 0) {	
+						alert('?��? ?�증???�메???�니??');
+					} else {
+						alert('?�메?�이 발송?�었?�니??');
+						emailOK = email;
+						document.getElementById('incl').style.display = 'block';
+					}
+				}
+			})
+		}
+		
+		function randomCheck() {
+			var inputNum = $('#inputNum').val();
+			if(inputNum == randomNum) {
+				alert('?�증?�었?�니??');
+				numOK = inputNum;
+				$("#email").css("background-color", "#B0F6AC");
+				$("#inputNum").css("background-color", "#B0F6AC");
+				numCheck = 1;
+			} else {
+				alert('?�증번호가 ?�릅?�다.');
+				$("#email").css("background-color", "#FFCECE");
+				$("#inputNum").css("background-color", "#FFCECE");
+				numCheck = 0;
+			}
+		} 
 		
 		function pwdCheck() {
 			var pwd1 = $( '#pwd1' ).val();
@@ -109,18 +147,9 @@
 				$("#pwd1").css("background-color", "#B0F6AC");
 				$("#pwd2").css("background-color", "#B0F6AC");
 			} else {
-				$('#pwdCheckMessage').html('비밀번호가 서로 일치하지 않습니다.');
+				$('#pwdCheckMessage').html('비�?번호가 ?�로 ?�치?��? ?�습?�다.');
 				$("#pwd1").css("background-color", "#FFCECE");
 				$("#pwd2").css("background-color", "#FFCECE");
-			}
-		}
-		
-		function emailCheck() {
-			var email = $( '#email' ).val();
-			if(email != ""){
-				$("#email").css("background-color", "#B0F6AC");
-			} else {
-				$("#email").css("background-color", "#FFCECE");
 			}
 		}
 		
@@ -139,47 +168,59 @@
 			var getPhone = RegExp(/^01([0|1|6|7|8|9]?)+-([0-9]{3,4})+-([0-9]{4})$/);
 			
 			if(!getCheck.test($("#id").val())) {
-			      alert("형식에 맞춰서 입력해주세요.");
+			      alert("?�식??맞춰???�력?�주?�요.");
 			      $("#id").val("");
 			      $("#id").focus();
 			      return false;
 			}
 			if(!getCheck.test($("#pwd1").val())) {
-			      alert("형식에 맞춰서 입력해주세요.");
+			      alert("?�식??맞춰???�력?�주?�요.");
 			      $("#pwd1").val("");
 			      $("#pwd1").focus();
 			      return false;
 			}
 			if ($("#id").val()==($("#pwd1").val())) {
-			      alert("비밀번호가 아이디랑 같습니다.");
+			      alert("비�?번호가 ?�이?�랑 같습?�다.");
 			      $("#pwd1").val("");
 			      $("#pwd1").focus();
 			      return false;
 			}
 			if ($("#pwd1").val()!=($("#pwd2").val())) {
-			      alert("비밀번호가 다릅니다.");
+			      alert("비�?번호가 ?�릅?�다.");
 			      $("#pwd2").val("");
 			      $("#pwd2").focus();
 			      return false;
 			}
 			if(!getMail.test($("#email").val())){
-		        alert("올바른 이메일 주소를 입력해주세요.");
+		        alert("?�바�??�메??주소�??�력?�주?�요.");
 		        $("#email").val("");
 		        $("#email").focus();	
 		        return false;
 		    }
 			if(!getPhone.test($("#phone").val())){
-		        alert("핸드폰 형식으로 해주세요.");
+		        alert("?�드???�식?�로 ?�주?�요.");
 		        $("#phone").val("");
 		        $("#phone").focus();
 		        return false;
 		    }
-			if(idOK != ($("#id").val())){
-				alert("중복확인을 눌러주세요.");
+			if(checkId == 0) {
+				alert("?�이??중복?�인???�주?�요.");
 				return false;
 			}
-			if(checkId == 0) {
-				alert("아이디 중복확인을 해주세요.");
+			if(idOK != ($("#id").val())){
+				alert("중복?�인???�러주세??");
+				return false;
+			}
+			if(emailOK != ($("#email").val())){
+				alert("?�메???�증???�러주세??");
+				return false;
+			}
+			if(numOK != ($("#inputNum").val())){
+				alert("?�메???�증???�러주세??");
+				return false;
+			}
+			if(numCheck == 0) { // ?�증???�면 ?�어�?
+				alert("?�메???�증?�인???�주?�요.");
 				return false;
 			}
 			
@@ -193,41 +234,43 @@
 	<body>
 	
 	<div class="fh5co-loader"></div>
-	
-<nav class="fh5co-nav" role="navigation">
+
+	<nav class="fh5co-nav" role="navigation">
+
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-2">
-					<div id="fh5co-logo"><a href="index.jsp">2조</a></div>
+					<div id="fh5co-logo"><a href="index.jsp">2�?/a></div>
 				</div>
 				<div class="col-xs-10 text-right menu-1">
 					<ul>
 						<li class="active"><a href="index.jsp">Home</a></li>
 						<li class="has-dropdown">
-							<a href="">원룸</a>
+							<a href="">?�룸</a>
 							<ul class="dropdown">
-								<li><a href="kakaomap_test/kakaomap_v1.09_reply11.jsp">원룸 검색</a></li>
-								<li><a href="#">상세 검색</a></li>
+								<li><a href="kakaomap_test/kakaomap_v1.09_reply11.jsp">?�룸 검??/a></li>
+								<li><a href="#">?�세 검??/a></li>
 							</ul>
 						</li>
 						<li class="has-dropdown">
-							<a href="">방 내놓기</a>
+							<a href="">�??�놓�?/a>
 							<ul class="dropdown">
 								<li><a href="#">매물 보기</a></li>
-								<li><a href="out.jsp">내 방 내놓기</a></li>
+								<li><a href="out.jsp">??�??�놓�?/a></li>
 							</ul>
 						</li>
+
                   
                <c:if test="${sessionScope.sessionID==null}">
-                  <li class="btn-cta"><a href="login.to"><span>로그인</span></a></li>
+                  <li class="btn-cta"><a href="login.to"><span>로그??/span></a></li>
                
-                        <li class="btn-cta"><a href="register.to"><span>회원가입</span></a></li> 
+                        <li class="btn-cta"><a href="register.to"><span>?�원가??/span></a></li> 
                     </c:if>
                     
                     <c:if test="${sessionScope.sessionID!=null}">
                          
-                  <li class="btn-cta"><span style="font-size: 30px">${sessionScope.sessionID }님</span></li> 
-                  <li class="btn-cta"><a href="logout.to"><span>로그아웃</span></a></li>
+                  <li class="btn-cta"><span style="font-size: 30px">${sessionScope.sessionID }??/span></li> 
+                  <li class="btn-cta"><a href="logout.to"><span>로그?�웃</span></a></li>
                
                     </c:if>
                      
@@ -241,22 +284,24 @@
       </div>
    </nav>
 
-	<header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_2.jpg);">
-      <div class="overlay"></div>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center">
-               <div class="display-t">
-                  <div class="display-tc animate-box" data-animate-effect="fadeIn">
-                     <h1>OneRoom Planet</h1>
-                     <div class="row">
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </header>
+
+
+	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(images/img_bg_2.jpg);">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>Contact Us</h1>
+							<h2>Free html5 templates Made by <a href="http://freehtml5.co" target="_blank">freehtml5.co</a></h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
 	
 	<div id="fh5co-contact">
 	 <div class="container">
@@ -264,43 +309,49 @@
        <div class="centered">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title text-center">업체 회원가입</h5>
-            <form class="form-signin" action="JoinAction.to" method="post" onsubmit="return check();">
+            <h5 class="card-title text-center">?�체 ?�원가??/h5>
+            <form class="form-signin" action="JoinAction.to" method="post" onsubmit="return check();" autocomplete="off">
              
              <div class="form-label-group">
-                <input type="text" name="name" id="name" oninput="nameCheck()" class="form-control" placeholder="이름" required autofocus>
+                <input type="text" name="name" id="name" oninput="nameCheck()" class="form-control" placeholder="?�름" required autofocus>
               </div>
               
               <div class="form-label-group">
-                <input type="text" name="cname" id="cname" oninput="cnameCheck()" class="form-control" placeholder="업체이름" required>
+                <input type="text" name="cname" id="cname" oninput="cnameCheck()" class="form-control" placeholder="?�체?�름" required>
               </div>
              
               <div class="form-label-group">
-                <input type="text" name="id" id="id" class="form-control" placeholder="아이디 ※4~12자의 영문 대소문자와 숫자" maxlength="12" required>
-                <button type="button" onclick="idCheck()">중복확인</button><h5 id="idCheckMessage"></h5>
+                <input type="text" name="id" id="id" class="form-control" placeholder="?�이????~12?�의 ?�문 ?�?�문?��? ?�자" maxlength="12" required>
+                <button type="button" onclick="idCheck()">중복?�인</button><h5 id="idCheckMessage"></h5>
               </div>
 
               <div class="form-label-group">
-                <input type="password" oninput="pwdCheck()" id="pwd1" name="pwd1" class="form-control" placeholder="비밀번호 ※4~12자의 영문 대소문자와 숫자" maxlength="12">
+                <input type="password" oninput="pwdCheck()" id="pwd1" name="pwd1" class="form-control" placeholder="비�?번호 ??~12?�의 ?�문 ?�?�문?��? ?�자" maxlength="12">
               </div>
               
               <div class="form-label-group">
-                <input type="password" oninput="pwdCheck()" id="pwd2" name="pwd2" class="form-control" placeholder="비밀번호 확인" maxlength="12">
+                <input type="password" oninput="pwdCheck()" id="pwd2" name="pwd2" class="form-control" placeholder="비�?번호 ?�인" maxlength="12">
               </div>
               
               <div class="form-label-group">
-                <input type="email" name="email" id="email" oninput="emailCheck()" class="form-control" placeholder="이메일" required>
+                <input type="email" name="email" id="email" class="form-control" placeholder="?�메?? required>
+                <button type="button" onclick="emailOK()">?�메???�증</button>
               </div>
               
+              <div class="form-label-group" id="incl" style="display:none">
+                <input type="text" name="inputNum" id="inputNum" class="form-control">
+                <button type="button" onclick="randomCheck()">?�증?�인</button>
+             </div>
+              
               <div class="form-label-group">
-                <input type="text" name="phone" id="phone" oninput="phoneCheck()" class="form-control" placeholder="전화번호 ※010-1111-1111" required>
+                <input type="text" name="phone" id="phone" oninput="phoneCheck()" class="form-control" placeholder="?�화번호 ??10-1111-1111" required>
               </div>
               
               <div class="form-label-group">
               <h5 style="color: red;" id="pwdCheckMessage"></h5>
               </div>
               
-              <button id="button" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" >회원가입</button>
+              <button id="button" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" >?�원가??/button>
              
             
             </form>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.model.MemberDAO;
 
+
 public class MemberDeleteAction implements Action{
 	 public ActionForward execute(HttpServletRequest request,HttpServletResponse response) 
 			 	throws Exception{
@@ -17,6 +18,7 @@ public class MemberDeleteAction implements Action{
 			   	boolean result=false;
 			   	boolean usercheck=false;
 			   	String id = request.getParameter("id");
+			   	System.out.println(id);
 			   	
 			   	MemberDAO memberdao=new MemberDAO();
 			   	System.out.println("2222");
@@ -33,4 +35,5 @@ public class MemberDeleteAction implements Action{
 		   		forward.setPath("./memberlist.to");
 		   		return forward;
 			 }
+
 }

@@ -1,17 +1,21 @@
-package member.model;
+﻿package member.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import member.model.*;
+
 
 public class MemberDAO {
 	DataSource ds;
@@ -221,10 +225,53 @@ public class MemberDAO {
 
 		return result;
 	}
+	
+	public int emailCheck(String email) {
+
+		int result = 0;
+
+		try {
+
+			String sql = "SELECT EMAIL FROM MEMBER WHERE EMAIL=?";
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next() || email.equals("")) {
+				result = 0; //이미 있는 이메일
+			} else {
+				result = 1;
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException ex) {
+				}
+		}
+
+		return result;
+	}
+	
+
 	public List getMemberList(){
-	      
 	      System.out.println("getMemberList() 시작");
-	      String member_list_sql="select * from member";
+	      String member_list_sql="select * from member where usernum=1 or usernum=2";
 	      
 	      List list = new ArrayList();
 	      
@@ -269,7 +316,7 @@ public class MemberDAO {
 			pstmt=con.prepareStatement(member_delete_sql);
 			pstmt.setString(1, id);
 			pstmt.executeUpdate();
-			if(result.equals(id))return true;
+			if(result != id)return true;
 			System.out.println("4444");
 			return false;
 		}catch(Exception ex){
@@ -283,7 +330,222 @@ public class MemberDAO {
 			
 		}
 		
-		return true;
+		return false;
 	}
+
+	public int pwdCheck(String id, String pwd) {
+		int result = 0;
+		String dbPwd = "";
 		
+		try {
+
+			String sql = "SELECT PWD FROM MEMBER WHERE ID=?";
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				dbPwd = rs.getString("pwd");
+				if (pwd.equals(dbPwd)) {
+					result = 1;
+				} else {
+					result = 0;
+				}
+			} else {
+				result = 0;
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException ex) {
+				}
+		}
+		
+		return result;
+	}
+	
+	public int emailCheck(String id, String email) {
+		int result = 0;
+		String dbEmail = "";
+		try {
+
+			String sql = "SELECT * FROM MEMBER WHERE ID=?";
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				dbEmail = rs.getString("email");
+				if(email.equals(dbEmail)) {
+					result = 1;
+				} else {
+					result = 0;
+				}
+			} else {
+				result = 0;
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException ex) {
+				}
+		}
+		
+		return result;
+	}
+	
+	public void delete(String id) {
+		try {
+			String sql = "delete FROM MEMBER WHERE ID=?";
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException ex) {
+				}
+		}
+	
+	}
+	
+	public String idSearch(String name, String email, String phone) {
+		
+		String result = "";
+		
+		try {
+			String sql = "select id from member where name=? and email=? and phone=?";
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, email);
+			pstmt.setString(3, phone);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getString("id");
+			} else {
+				result = "";
+			}
+			
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException ex) {
+				}
+		}
+		
+		return result;
+	}
+	
+	public String pwdSearch(String name, String id, String email, String phone) {
+		
+		String result = "";
+		
+		try {
+			String sql = "select * from member where name=? and id=? and email=? and phone=?";
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, id);
+			pstmt.setString(3, email);
+			pstmt.setString(4, phone);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getString("pwd");
+			} else {
+				result = "";
+			}
+			
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (con != null)
+				try {
+					con.close();
+				} catch (SQLException ex) {
+				}
+		}
+		
+		return result;
+	}
+
 }
+

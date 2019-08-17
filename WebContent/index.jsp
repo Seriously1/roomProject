@@ -11,9 +11,6 @@
    <meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
    <meta name="author" content="gettemplates.co" />
 
-
-
-   
    <!-- Animate.css -->
    <link rel="stylesheet" href="css/animate.css">
    <!-- Icomoon Icon Fonts-->
@@ -29,7 +26,13 @@
    <!--[if lt IE 9]>
    <script src="js/respond.min.js"></script>
    <![endif]-->
-
+	
+   <script>
+  	if (IsUserLoggedIn()) {
+      alert("로그인하세요.");
+      window.location = "/login.html";
+  	}
+   </script>
    </head>
    <body>
       
@@ -68,15 +71,17 @@
 						</li>
                   
                <c:if test="${sessionScope.sessionID==null}">
-                  <li class="btn-cta"><a href="login.to"><span>로그인</span></a></li>
-               
-                        <li class="btn-cta"><a href="register.to"><span>회원가입</span></a></li> 
-                    </c:if>
+                    <li class="btn-cta"><a href="login.to"><span>로그인</span></a></li>
+               		<li class="btn-cta"><a href="search.to"><span>아이디/비밀번호 찾기</span></a></li> 
+                    <li class="btn-cta"><a href="register.to"><span>회원가입</span></a></li> 
+                         
+               </c:if>
                     
                     <c:if test="${sessionScope.sessionID!=null}">
                          
                   <li class="btn-cta"><span style="font-size: 30px">${sessionScope.sessionID }님</span></li> 
                   <li class="btn-cta"><a href="logout.to"><span>로그아웃</span></a></li>
+                  <li class="btn-cta"><a href="registerDelete.to"><span>회원 탈퇴</span></a></li>
                
                     </c:if>
                      
@@ -128,7 +133,7 @@
    <script src="js/bootstrap.min.js"></script>
    <!-- Waypoints -->
    <script src="js/jquery.waypoints.min.js"></script>
-   <!-- Main -->
+   <!-- Main -->	
    <script src="js/main.js"></script>
    </body>
 </html>
