@@ -19,7 +19,9 @@ public class RoomDAO {
 	public RoomDAO() {
 		try{
 			Context init = new InitialContext();
+
 	  	    ds = (DataSource) init.lookup("java:comp/env/jdbc:OracleDB");
+
 		}catch(Exception ex){
 			return;
 		}
@@ -46,7 +48,7 @@ public class RoomDAO {
 		pstmt.setString(6, room.getIMAGE4());
 		pstmt.setString(7, room.getIMAGE5());
 		pstmt.setInt(8, room.getDEPOSIT());
-		pstmt.setInt(9, room.getRENT());
+		pstmt.setInt(9, room.getRENT()); //
 		pstmt.setString(10, room.getROOMTYPE());
 		pstmt.setString(11, room.getMPAY());
 		pstmt.setString(12, room.getMPAY2());

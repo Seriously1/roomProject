@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Context reloadable="true">
-
+	
    <WatchedResource>WEB-INF/web.xml</WatchedResource>
    
     <Resource name="jdbc:OracleDB" 
@@ -21,4 +21,5 @@
          />
 
 </Context>
+
 
