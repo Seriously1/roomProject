@@ -88,8 +88,8 @@ public class RoomOutAction implements Action{
 			vo.setIMAGE4(multi.getFilesystemName("FILE4"));
 			vo.setIMAGE5(multi.getFilesystemName("FILE5"));
 
-			String NADDRESS = multi.getParameter("NADDRESS") + " " + multi.getParameter("ADDRESS2") + multi.getParameter("ADDRESS3");
-			String RADDRESS = multi.getParameter("RADDRESS") + " " + multi.getParameter("ADDRESS2") + multi.getParameter("ADDRESS3");
+			NADDRESS = multi.getParameter("NADDRESS") + " " + multi.getParameter("ADDRESS2") + multi.getParameter("ADDRESS3");
+			RADDRESS = multi.getParameter("RADDRESS") + " " + multi.getParameter("ADDRESS2") + multi.getParameter("ADDRESS3");
 			System.out.println("RoomOutAction");
 			vo.setNADDRESS(NADDRESS);
 			vo.setRADDRESS(RADDRESS);
