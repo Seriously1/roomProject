@@ -189,7 +189,6 @@ public class ArrayServlet extends HttpServlet {
 
 				jsondetail.add(decodeutf8(detailArray.get(i).getNADDRESS())); // 1
 				jsondetail.add(decodeutf8(detailArray.get(i).getRADDRESS())); // 2
-
 				jsondetail.add(decodeutf8(detailArray.get(i).getIMAGE1())); // 3
 				jsondetail.add(decodeutf8(detailArray.get(i).getIMAGE2())); // 4
 				jsondetail.add(decodeutf8(detailArray.get(i).getIMAGE3())); // 5

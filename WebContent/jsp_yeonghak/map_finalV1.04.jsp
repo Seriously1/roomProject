@@ -122,7 +122,7 @@
 
 	<p style="margin-top: -12px"></p>
 	<div name="good"
-		style="overflow: scroll; width: 30%; height: 850px; float: right; overflow: scroll; background-color: gold;">
+      style="overflow: scroll; width: 30%; height: 850px; float: right; overflow: scroll; background-color: #f8f9fa!important;">
 
 		<form name="replyform">
 			<!-- <font type="hidden" id="latid" name="lntname"></font><br> 
@@ -151,7 +151,7 @@
 		<form action="javascript:replydbsave()" name="replypart">
 
 	<input type="text" width=50px name="replyname" id="replyid">
-	<input type="submit" height=250px value="검색">
+	<input type="submit" height=250px value="등록">
 
 </form>
 
@@ -162,7 +162,6 @@
 
 		
 	</div>
-	<div id="map" style="width: 70%; height: 850px; float: left;"></div>
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cf17b15a111ecb427c26da3a08661ee9&libraries=services,clusterer">
@@ -302,9 +301,10 @@
     								+"지번주소 : "+ as[0] + "\n " + as[1]+" 개 데이터 저장"); */
     								alert("한줄평등록성공");
     								getreplyajax(addrtodb);
+    								mapchange();
     					},
     					error:function(msg,error){
-    						alert(error+"addrtodb = "+addrtodb+"\nreplycont = "+replycont);
+    						alert(error+"addrtodb : "+addrtodb+"\nreplycont = "+replycont);
     					}
     				}
     			  );
@@ -589,7 +589,8 @@
 			var text = "";
 
 			//var obj = JSON.parse(data);
-
+			
+			
 			text += "제목 : " + encodeutf8(data.title) + "<br>";
 			text += "상세 설명 : " + encodeutf8(data.content) + "<br>";
 			text += "입주 가능일 : " + encodeutf8(data.rdate) + "<br>";
@@ -604,6 +605,7 @@
 			text += "엘리베이터 : " + encodeutf8(data.elve) + "<br>";
 			text += "층수 : " + encodeutf8(data.floor) + "<br>";
 			text += "크기 : " + encodeutf8(data.rsize) + "<br>";
+			text += "<img src='C:/KHT/JSP%20workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/roomProject/image/" +encodeutf8(data.image1) + "'>";
 
 			document.getElementById('detailcontent').innerHTML = text;
 
@@ -620,8 +622,8 @@
 				text += "<input type='button' value='수정하기' onClick=aa('"+encodeutf8_2(list.addr)+"') ><br>";
 				text += "주소는 = " + encodeutf8(list.addr); */
 				addr = encodeutf8(list.addr);
-				text += "<br>한줄평 = " + encodeutf8(list.reply);
-				text += "<br>작성자 = " + encodeutf8(list.id) + "<br><br><hr>";
+				text += "<br>한줄평 : " + encodeutf8(list.reply);
+				text += "<br>작성자 : " + encodeutf8(list.id) + "<br><br><hr>";
 
 			});
 			//document.getElementById('show').innerHTML = text;
