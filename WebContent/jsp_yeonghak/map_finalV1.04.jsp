@@ -605,8 +605,23 @@
 			text += "엘리베이터 : " + encodeutf8(data.elve) + "<br>";
 			text += "층수 : " + encodeutf8(data.floor) + "<br>";
 			text += "크기 : " + encodeutf8(data.rsize) + "<br>";
-			text += "<img src='C:/KHT/JSP%20workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/roomProject/image/" +encodeutf8(data.image1) + "'>";
+			if(encodeutf8(data.image1) != "내용 없음"){
+			text += "<img src='../image/" + encodeutf8(data.image1) + "' width='70px' >";
+			}
+			if(encodeutf8(data.image2) != "내용 없음"){
+				text += "<img src='../image/" + encodeutf8(data.image2) + "' width='70px' >";
+			}
+			if(encodeutf8(data.image3) != "내용 없음"){
+				text += "<img src='../image/" + encodeutf8(data.image3) + "' width='70px' >";
+			}
+			if(encodeutf8(data.image4) != "내용 없음"){
+				text += "<img src='../image/" + encodeutf8(data.image4) + "' width='70px' >";
+			}
+			if(encodeutf8(data.image5) != "내용 없음"){
+				text += "<img src='../image/" + encodeutf8(data.image5) + "' width='70px' >";
+			}
 
+	
 			document.getElementById('detailcontent').innerHTML = text;
 
 			//document.getElementById('replycontent').innerHTML=text;
