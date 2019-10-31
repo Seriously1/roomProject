@@ -233,38 +233,40 @@
 	</head>
 	<body>
 	
-	<div class="fh5co-loader"></div>
 
 	<nav class="fh5co-nav" role="navigation">
-
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-2">
-					<div id="fh5co-logo"><a href="index.jsp">2조</a></div>
+					<div id="fh5co-logo">
+						<a href="index.jsp">2조</a>
+					</div>
 				</div>
 				<div class="col-xs-10 text-right menu-1">
 					<ul>
 						<li class="active"><a href="index.jsp">Home</a></li>
-						<li class="has-dropdown">
-							<a href="">원룸</a>
+						<li class="has-dropdown"><a href="">원룸</a>
 							<ul class="dropdown">
 								<li><a href="jsp_yeonghak/map_finalV1.04.jsp">원룸 검색</a></li>
 								<li><a href="#">상세 검색</a></li>
-							</ul>
-						</li>
-						<li class="has-dropdown">
-							<a href="">방 내놓기</a>
+							</ul></li>
+						<li class="has-dropdown"><a href="#">방 내놓기</a>
 							<ul class="dropdown">
 								<li><a href="#">매물 보기</a></li>
-								<li><a href="out.jsp">내 방 내놓기</a></li>
-							</ul>
-						</li>
-               
-            </div>
-         </div>
-         
-      </div>
-   </nav>
+								<li><a href="out.do">내 방 내놓기</a></li>
+
+							</ul></li>
+						<li class="btn-cta"><a href="login.jsp"><span>로그인</span></a></li>
+						<li class="btn-cta"><a href="register.jsp"><span>회원가입</span></a></li>
+					</ul>
+
+
+				</div>
+			</div>
+
+		</div>
+	</nav>
+
 
 
 	<header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_2.jpg);">

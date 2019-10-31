@@ -27,7 +27,7 @@ public class EmailAction implements Action {
 			return null;
 		}
 		
-		String randomNum = request.getParameter("randomNum");
+		String randomNum = request.getParameter("randomNum"); 
 		String from = "jinsan654321@gmail.com";
 		String to = request.getParameter("email");
 		String subject = "회원가입을 위한 이메일 확인 메일입니다.";
@@ -35,8 +35,9 @@ public class EmailAction implements Action {
 		
 
 		
-		Properties p = new Properties();
+		Properties p = new Properties();    // hashtable 상속하는 콜렉션 hashmap 구조 = // FileInputstream+hashmap = properties
 		p.put("mail.smtp.user", from);
+		//		키				밸류
 		p.put("mail.smtp.host", "smtp.googlemail.com");
 		p.put("mail.smtp.port", "465");
 		p.put("mail.smtp.starttls.enable", "true");

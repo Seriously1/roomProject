@@ -203,7 +203,7 @@
       					url : "<%=request.getContextPath()%>/ArrayServlet.do",      					
       					type: "get",
       					dataType: "json",
-      					data:{"latlng":latlng}, //여기서 데이터를 바로보내준다ㅋㅋㅋ
+      					data:{"latlng":latlng}, //여기서 데이터를 바로보내준다
       					header:{
       						"Content-Type":"application/json",	//Content-Type 설정
       						"X-HTTP-Method-Override":"POST"},
@@ -267,8 +267,8 @@
     	    	    
     	    	    //document.getElementById('markid').innerHTML="마커클러스터 지번주소 "+decodeaddr;
     	    	    detailnull();//마커를 클릭할때 상세정보를 한번공백해준다.
-    	    	    getdetailajax(decodeaddr);
-    	    	    getreplyajax(decodeaddr);
+    	    	    getdetailajax(decodeaddr);//상세정보
+    	    	    getreplyajax(decodeaddr);//리플정보
     	    	    
     	    	  });
     	    	 
@@ -293,7 +293,7 @@
     				{
     					url : "<%=request.getContextPath()%>/ArrayServlet.do",
     					type: "get",
-    					data:{"reply":[replycont,addrtodb,id,lng,lat]}, //여기서 데이터를 바로보내준다ㅋㅋㅋ 
+    					data:{"reply":[replycont,addrtodb,id,lng,lat]}, //여기서 데이터를 바로보내준다 
     					//리플데이터,주소,id,lng,lat
     					success:function(data){
     						var as = eval(data);//객체 변환
@@ -324,7 +324,7 @@
         				{        					
         					url : "<%=request.getContextPath()%>/ArrayServlet.do",
         					type: "get",
-        					data:{"string":[lng,lat,addr]}, //여기서 데이터를 바로보내준다ㅋㅋㅋ
+        					data:{"string":[lng,lat,addr]}, //여기서 데이터를 바로보내준다
         					success:function(data){
         						var as = eval(data);//객체 변환
         						alert("데이터 저장성공 :\n"
@@ -532,7 +532,7 @@
 				dataType : "json",
 				data : {
 					"addr" : addr
-				}, //여기서 데이터를 바로보내준다ㅋㅋㅋ
+				}, //여기서 데이터를 바로보내준다
 				header : {//Content-Type 설정
 					"Content-Type" : "application/json", 
 					"X-HTTP-Method-Override" : "POST"
@@ -561,7 +561,7 @@
 				data : {
 					"addrtodetail" : addrtoaddr
 				//상세정보를 가져오기위해 detail파라미터에 주소값을 넣어준다.
-				}, //여기서 데이터를 바로보내준다ㅋㅋㅋ
+				}, //여기서 데이터를 바로보내준다
 				header : {
 					"Content-Type" : "application/json", //Content-Type 설정
 					"X-HTTP-Method-Override" : "POST"
@@ -579,7 +579,26 @@
 				}
 			});
 		};
+//
+		function OnloadImg(url){
 
+  var img=new Image();
+
+  img.src=url;
+
+  var img_width=img.width;
+
+  var win_width=img.width+25;
+
+  var height=img.height+30;
+
+  var OpenWindow=window.open('','_blank', 'width='+img_width+', height='+height+', menubars=no, scrollbars=auto');
+
+  OpenWindow.document.write("<style>body{margin:0px;}</style><img src='"+url+"' width='"+win_width+"'>");
+
+ }
+		//
+		
 		function setdetail(data) {
 
 			console.log(data);
@@ -606,19 +625,19 @@
 			text += "층수 : " + encodeutf8(data.floor) + "<br>";
 			text += "크기 : " + encodeutf8(data.rsize) + "<br>";
 			if(encodeutf8(data.image1) != "내용 없음"){
-			text += "<img src='../image/" + encodeutf8(data.image1) + "' width='70px' >";
+				text += "<img src='../image/" + encodeutf8(data.image1) + "' width='70px' onclick='OnloadImg(this.src)'>"; 
 			}
 			if(encodeutf8(data.image2) != "내용 없음"){
-				text += "<img src='../image/" + encodeutf8(data.image2) + "' width='70px' >";
+				text += "<img src='../image/" + encodeutf8(data.image2) + "' width='70px' onclick='OnloadImg(this.src)'>";
 			}
 			if(encodeutf8(data.image3) != "내용 없음"){
-				text += "<img src='../image/" + encodeutf8(data.image3) + "' width='70px' >";
+				text += "<img src='../image/" + encodeutf8(data.image3) + "' width='70px' onclick='OnloadImg(this.src)'>";
 			}
 			if(encodeutf8(data.image4) != "내용 없음"){
-				text += "<img src='../image/" + encodeutf8(data.image4) + "' width='70px' >";
+				text += "<img src='../image/" + encodeutf8(data.image4) + "' width='70px' onclick='OnloadImg(this.src)'>";
 			}
 			if(encodeutf8(data.image5) != "내용 없음"){
-				text += "<img src='../image/" + encodeutf8(data.image5) + "' width='70px' >";
+				text += "<img src='../image/" + encodeutf8(data.image5) + "' width='70px' onclick='OnloadImg(this.src)'>";
 			}
 
 	

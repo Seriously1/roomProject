@@ -269,19 +269,16 @@ public class MemberDAO {
 	
 
 	public List getMemberList(){
-	      System.out.println("getMemberList() �떆�옉");
 	      String member_list_sql="select * from member where usernum=1 or usernum=2";
 	      
 	      List list = new ArrayList();
 	      
 	      try{
-	         System.out.println("�뿬湲곕뒗媛�?");
 	         con = ds.getConnection();
 	         pstmt = con.prepareStatement(member_list_sql);
 	         rs = pstmt.executeQuery();
 	         
 	         while(rs.next()){
-	            System.out.println("�떆�옉���븿?");
 	            MemberVO member = new MemberVO();
 	            member.setName(rs.getString("name"));
 	            member.setId(rs.getString("id"));
@@ -290,13 +287,11 @@ public class MemberDAO {
 	            member.setCname(rs.getString("cname"));
 	            member.setUsernum(rs.getInt("usernum"));
 	            list.add(member);
-	            System.out.println("由ъ뒪�듃");
-	            System.out.println(list);
 	         }
 	         
 	         return list;
 	      }catch(Exception ex){
-	         System.out.println("getMemberList �뿉�윭 : " + ex);
+	    	  ex.printStackTrace();
 	      }finally{
 	         if(rs!=null) try{rs.close();}catch(SQLException ex){}
 	         if(pstmt!=null) try{pstmt.close();}catch(SQLException ex){}

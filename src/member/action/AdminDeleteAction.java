@@ -24,11 +24,9 @@ public class AdminDeleteAction implements Action{
 			   	
 			   	result=memberdao.memberDelete(id);
 			   	if(result==false){
-			   		System.out.println("회원 삭제 실패");
 			   		return null;
 			   	}
 			   	
-			   	System.out.println("회원 삭제 성공");
 			   	forward.setRedirect(true);
 		   		forward.setPath("./memberlist.to");
 		   		return forward;
